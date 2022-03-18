@@ -1,0 +1,63 @@
+data:
+  type: image
+  train_dir: ../data/shapes/train
+  test_dir: ../data/shapes/train
+  lsun_categories_train: bedroom_train
+  lsun_categories_test: bedroom_test
+  img_size: 64
+  nlabels: 1
+generator:
+  name: resnet2
+  kwargs:
+    nfilter: 32
+    nfilter_max: 512
+    embed_size: 256
+discriminator:
+  name: resnet2
+  kwargs:
+    nfilter: 32
+    nfilter_max: 512
+    embed_size: 256
+z_dist:
+  type: gauss
+  dim: 256
+training:
+  out_dir: output/shapes_test
+  gan_type: standard
+  reg_type: real
+  img_reg_param: 10.
+  vid_reg_param: 10.
+  batch_size: 8
+  video_len: 16
+  nworkers: 32
+  take_model_average: true
+  model_average_beta: 0.999
+  model_average_reinit: false
+  monitoring: tensorboard
+  sample_every: 1000
+  sample_nlabels: 20
+  inception_every: 10000
+  save_every: 900
+  backup_every: 100000
+  restart_every: -1
+  optimizer: adam
+  lr_g: 0.0001
+  lr_d: 0.0001
+  lr_anneal: 1.
+  lr_anneal_every: 150000
+  d_steps: 1
+  equalize_lr: false
+  random_embedding: false
+test:
+  batch_size: 8
+  sample_size: 32
+  sample_nrow: 8
+  use_model_average: true
+  compute_inception: true
+  conditional_samples: true
+interpolations:
+  ys: [15, 157, 307, 321, 442, 483, 484, 525,
+       536, 598, 607, 734, 768, 795, 927, 977,
+       963, 946, 979]
+  nzs: 10
+  nsubsteps: 75
